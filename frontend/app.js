@@ -588,6 +588,10 @@ async function performTranslation() {
 // ==========================================
 
 async function loadHistory() {
+  const historyList = document.getElementById('history-list');
+  const recentHistoryList = document.getElementById('recent-history-list');
+  if (!historyList) return;
+
   try {
     const token = localStorage.getItem('translator_token');
     const res = await fetch(`${API_URL}/translate/history`, {
@@ -595,37 +599,50 @@ async function loadHistory() {
     });
     const data = await res.json();
     
-    if (res.ok && data.data.length > 0) {
-      // For UI matching, we group them. Let's just render them all as TODAY for now.
-      historyList.innerHTML = `
-        <div class="date-group">
-          <h4>TODAY — OCT 24, 2023</h4>
-          <div class="history-items" id="history-items-container"></div>
-        </div>
-      `;
-      const container = document.getElementById('history-items-container');
-      
+    if (res.ok) {
+      if (data.data.length === 0) {
+        historyList.innerHTML = '<div class="text-center p-5">No history yet. Start translating!</div>';
+        if (recentHistoryList) recentHistoryList.innerHTML = '<li>No recent activity</li>';
+        return;
+      }
+
+      // Populate Main History View
+      historyList.innerHTML = '';
       data.data.forEach(item => {
-        container.innerHTML += `
-          <div class="history-item">
-            <div class="item-header">
-              <div class="lang-path">
-                <span class="lang-badge">${item.sourceLanguage}</span>
-                <span class="material-symbols-outlined path-arrow">arrow_right_alt</span>
-                <span class="lang-badge">${item.targetLanguage}</span>
+        const date = new Date(item.createdAt).toLocaleDateString(undefined, {
+          weekday: 'short', year: 'numeric', month: 'short', day: 'numeric'
+        });
+        
+        historyList.innerHTML += `
+          <div class="date-group">
+            <h4>${date.toUpperCase()}</h4>
+            <div class="history-item">
+              <div class="item-header">
+                <div class="lang-path">
+                  <span class="lang-badge">${item.sourceLanguage}</span>
+                  <span class="material-symbols-outlined path-arrow">arrow_right_alt</span>
+                  <span class="lang-badge">${item.targetLanguage}</span>
+                </div>
+                <div class="item-meta">
+                  <span>${new Date(item.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                </div>
               </div>
-              <div class="item-meta">
-                <span>12:00</span>
-                <span class="material-symbols-outlined star-btn">star</span>
+              <div class="item-content">
+                <div class="source-lang-text">${item.originalText}</div>
+                <div class="target-lang-text">${item.translatedText}</div>
               </div>
-            </div>
-            <div class="item-content">
-              <div class="source-lang-text">${item.originalText}</div>
-              <div class="target-lang-text">${item.translatedText}</div>
             </div>
           </div>
         `;
       });
+
+      // Populate Dashboard Recent List
+      if (recentHistoryList) {
+        recentHistoryList.innerHTML = '';
+        data.data.slice(0, 5).forEach(item => {
+          recentHistoryList.innerHTML += `<li>${item.originalText.substring(0, 30)}${item.originalText.length > 30 ? '...' : ''}</li>`;
+        });
+      }
     }
   } catch (e) {
     console.error("Failed to load history", e);
@@ -641,14 +658,8 @@ async function loadPhrasebook() {
     const res = await fetch(`${API_URL}/phrases`);
     const data = await res.json();
     
-    // Merge mock data with real data for a rich UI
-    const mockPhrases = [
-      { region: "KYOTO, JAPAN", phrase: "一期一会", sub: '"Ichi-go ichi-e"', lit: '"One time, one meeting"', fig: "Cherish every encounter, for it will never recur in the same way again.", tag: "Social", tagClass: "" },
-      { region: "MADRID, SPAIN", phrase: "Ponerse las pilas", sub: '"Put in the batteries"', lit: '"To put one\'s batteries in"', fig: "To wake up, get energized, or start working hard on a specific task.", tag: "Business", tagClass: "business" }
-    ];
-
     const realPhrases = (data.data || []).map(p => ({
-      region: p.region + " (USER SAVED)",
+      region: p.region,
       phrase: p.originalPhrase,
       sub: p.language.toUpperCase(),
       lit: p.originalPhrase,
@@ -657,15 +668,19 @@ async function loadPhrasebook() {
       tagClass: "business"
     }));
 
-    const allPhrases = [...realPhrases, ...mockPhrases];
-
     phraseGrid.innerHTML = '';
-    allPhrases.forEach(p => {
+    
+    if (realPhrases.length === 0) {
+      phraseGrid.innerHTML = '<div class="text-center p-5" style="grid-column: 1/-1;">Your phrasebook is empty. Use "Save to Phrasebook" during translation to add items!</div>';
+      return;
+    }
+
+    realPhrases.forEach(p => {
       phraseGrid.innerHTML += `
         <div class="phrase-card">
           <div class="card-top">
             <span class="region-badge">${p.region}</span>
-            <span class="material-symbols-outlined bookmark-icon">bookmark</span>
+            <span class="material-symbols-outlined bookmark-icon" style="color: var(--primary)">bookmark</span>
           </div>
           <div class="phrase-title">${p.phrase}</div>
           <div class="phrase-sub">${p.sub}</div>
@@ -681,7 +696,6 @@ async function loadPhrasebook() {
           
           <div class="card-bottom">
             <div class="phrase-tag ${p.tagClass}">${p.tag}</div>
-            <a href="#" class="details-link">Details <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span></a>
           </div>
         </div>
       `;
