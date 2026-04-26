@@ -138,8 +138,9 @@ exports.updateAvatar = async (req, res, next) => {
 // Get token from model, create cookie and send response
 const sendTokenResponse = (user, statusCode, res) => {
   // Create token
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRE,
+  const secret = process.env.JWT_SECRET || 'fallback_secret_for_deployment_debugging';
+  const token = jwt.sign({ id: user._id }, secret, {
+    expiresIn: process.env.JWT_EXPIRE || '30d',
   });
 
   res.status(statusCode).json({
