@@ -18,14 +18,6 @@ const toggleAuthModeBtn = document.getElementById('toggle-auth-mode');
 const nameGroup = document.getElementById('name-group');
 const authSubmitBtn = document.getElementById('auth-submit-btn');
 
-const googleCompleteForm = document.getElementById('google-complete-form');
-const googlePassword = document.getElementById('google-password');
-const cancelGoogleBtn = document.getElementById('cancel-google-btn');
-const authSwitchContainer = document.getElementById('auth-switch-container');
-
-const btnGoogleLogin = document.getElementById('btn-google-login');
-const btnAppleLogin = document.getElementById('btn-apple-login');
-
 const headerLoginBtn = document.getElementById('header-login-btn');
 const headerAuthSection = document.getElementById('header-auth-section');
 const headerUserSection = document.getElementById('header-user-section');
@@ -293,111 +285,7 @@ authForm.addEventListener('submit', async (e) => {
   }
 });
 
-let pendingGoogleUser = null;
-
-async function handleMockSocialLogin(provider) {
-  // Simulate fetching from Google Popup
-  const simulatedEmail = `demo@${provider.toLowerCase()}.com`;
-  const simulatedName = `Demo User (${provider})`;
-
-  authSubmitBtn.disabled = true;
-  authSubmitBtn.textContent = `Connecting to ${provider}...`;
-
-  try {
-    const res = await fetch(`${API_URL}/auth/google-init`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: simulatedEmail, name: simulatedName })
-    });
-    const data = await res.json();
-
-    if (!res.ok) throw new Error(data.error);
-
-    if (data.requiresPassword) {
-      // User is new! Show password form
-      authForm.classList.add('hidden');
-      if (authSwitchContainer) authSwitchContainer.classList.add('hidden');
-      document.querySelector('.auth-card h2').textContent = 'Complete Registration';
-      document.querySelector('.auth-card .subtitle').classList.add('hidden');
-      
-      googleCompleteForm.classList.remove('hidden');
-      pendingGoogleUser = { email: data.email, name: data.name };
-    } else {
-      // User already exists, they are logged in
-      localStorage.setItem('translator_token', data.token);
-      localStorage.setItem('translator_user', JSON.stringify(data.user));
-      checkAuth();
-      navigateTo('view-translation-hub');
-    }
-  } catch (err) {
-    authError.textContent = err.message;
-    authError.classList.remove('hidden');
-  } finally {
-    authSubmitBtn.disabled = false;
-    authSubmitBtn.textContent = isLoginMode ? 'Login' : 'Create Account';
-  }
-}
-
-googleCompleteForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const password = googlePassword.value;
-  const submitBtn = document.getElementById('google-submit-btn');
-  submitBtn.disabled = true;
-
-  try {
-    const res = await fetch(`${API_URL}/auth/google-complete`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: pendingGoogleUser.email,
-        name: pendingGoogleUser.name,
-        password: password
-      })
-    });
-    
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error);
-
-    localStorage.setItem('translator_token', data.token);
-    localStorage.setItem('translator_user', JSON.stringify(data.user));
-    checkAuth();
-    navigateTo('view-translation-hub');
-
-    // Reset UI
-    resetGoogleForm();
-  } catch (err) {
-    alert("Error: " + err.message);
-  } finally {
-    submitBtn.disabled = false;
-  }
-});
-
-if (cancelGoogleBtn) {
-  cancelGoogleBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    resetGoogleForm();
-  });
-}
-
-function resetGoogleForm() {
-  googleCompleteForm.classList.add('hidden');
-  authForm.classList.remove('hidden');
-  if (authSwitchContainer) authSwitchContainer.classList.remove('hidden');
-  document.querySelector('.auth-card h2').textContent = isLoginMode ? 'Welcome back' : 'Create your account';
-  document.querySelector('.auth-card .subtitle').classList.remove('hidden');
-  pendingGoogleUser = null;
-  googlePassword.value = '';
-}
-
-btnGoogleLogin.addEventListener('click', (e) => {
-  e.preventDefault();
-  handleMockSocialLogin('Google');
-});
-
-btnAppleLogin.addEventListener('click', (e) => {
-  e.preventDefault();
-  handleMockSocialLogin('Apple');
-});
+// Social login handlers removed
 
 // ==========================================
 // TRANSLATION HUB

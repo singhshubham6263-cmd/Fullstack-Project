@@ -64,17 +64,7 @@
           <h2>Create your account</h2>
           <p class="subtitle">Start your 14-day premium trial today. No credit card required.</p>
 
-          <button id="btn-google-login" class="btn btn-outline w-100 mb-3 btn-social">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google">
-            Continue with Google
-          </button>
-          <button id="btn-apple-login" class="btn btn-outline w-100 mb-4 btn-social">
-            <span class="material-symbols-outlined">apple</span> Continue with Apple
-          </button>
-
-          <div class="divider">
-            <span>OR REGISTER WITH EMAIL</span>
-          </div>
+          <!-- Social logins removed to avoid Safe Browsing flags -->
 
           <form id="auth-form">
             <div class="form-group" id="name-group">
@@ -101,18 +91,6 @@
             <button type="submit" id="auth-submit-btn" class="btn btn-primary w-100">Create Account</button>
           </form>
 
-          <!-- Custom Google Complete Form (Hidden by default) -->
-          <form id="google-complete-form" class="hidden">
-            <p style="font-size: 0.95rem; margin-bottom: 1.5rem; color: var(--text-light); text-align: center;" id="google-complete-msg">We found your Google Account. Please create a local password to complete registration.</p>
-            <div class="form-group">
-              <label>Set your Password</label>
-              <input type="password" id="google-password" placeholder="••••••••" required>
-            </div>
-            <button type="submit" id="google-submit-btn" class="btn btn-primary w-100">Complete Registration</button>
-            <div class="auth-switch mt-3">
-               <a href="#" id="cancel-google-btn">Cancel</a>
-            </div>
-          </form>
 
           <p class="auth-switch">Already have an account? <a href="#" id="toggle-auth-mode">Login here</a></p>
         </div>
