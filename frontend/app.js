@@ -257,6 +257,13 @@ authForm.addEventListener('submit', async (e) => {
   authSubmitBtn.disabled = true;
   authSubmitBtn.textContent = 'Processing...';
 
+  // Show wake-up message if it takes long
+  const wakeUpTimer = setTimeout(() => {
+    if (authSubmitBtn.disabled) {
+      authSubmitBtn.textContent = 'Server is waking up...';
+    }
+  }, 5000);
+
   const email = authEmail.value;
   const password = authPassword.value;
   const name = authName.value;
@@ -287,6 +294,7 @@ authForm.addEventListener('submit', async (e) => {
     authError.textContent = err.message;
     authError.classList.remove('hidden');
   } finally {
+    clearTimeout(wakeUpTimer);
     authSubmitBtn.disabled = false;
     authSubmitBtn.textContent = isLoginMode ? 'Login' : 'Create Account';
   }
