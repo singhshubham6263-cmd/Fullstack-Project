@@ -229,30 +229,55 @@ body:has(#view-auth:not(.hidden)) .mobile-nav {
 .search-bar .material-symbols-outlined { color: var(--text-light); font-size: 18px; }
 .search-bar input { border: none; background: transparent; outline: none; width: 100%; font-family: var(--font-sans); font-size: 0.9rem; }
 
-.header-right { display: flex; align-items: center; gap: 1rem; }
-#header-auth-section, #header-user-section { display: flex; align-items: center; gap: 1rem; }
-.user-avatar { width: 36px; height: 36px; border-radius: 50%; background-color: var(--text-main); color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; overflow: hidden; }
+.header-right { 
+  display: flex; 
+  align-items: center; 
+  gap: 1.25rem; 
+  margin-left: auto;
+}
+
+#header-auth-section, #header-user-section { 
+  display: flex; 
+  align-items: center; 
+  gap: 1.25rem; 
+}
+
+.user-avatar { 
+  width: 38px; 
+  height: 38px; 
+  border-radius: 50%; 
+  background-color: var(--text-main); 
+  color: white; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  cursor: pointer; 
+  overflow: hidden; 
+  border: 1px solid var(--border);
+}
 .user-avatar img { width: 100%; height: 100%; object-fit: cover; }
 
 /* Notifications & Dropdowns */
 .notification-container { position: relative; }
 .notif-badge { position: absolute; top: 0; right: 0; width: 8px; height: 8px; background: var(--danger); border-radius: 50%; border: 2px solid var(--bg-card); }
 
-.notif-dropdown {
+.notif-dropdown, .profile-dropdown {
   position: absolute;
-  top: calc(100% + 10px);
+  top: calc(100% + 12px);
   right: 0;
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  width: 300px;
-  z-index: 1000;
+  z-index: 2000;
   display: none;
   flex-direction: column;
   animation: slideIn 0.2s ease-out;
 }
-.notif-dropdown.show { display: flex; }
+
+.notif-dropdown { width: 320px; }
+.profile-dropdown { width: 240px; padding: 0.5rem 0; }
+.notif-dropdown.show, .profile-dropdown.show { display: flex; }
 .notif-list { max-height: 400px; overflow-y: auto; }
 .notif-item { padding: 1rem; border-bottom: 1px solid var(--border); font-size: 0.85rem; cursor: pointer; transition: background 0.2s; }
 .notif-item:hover { background: var(--bg-main); }
