@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LinguistPro</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Material Symbols Outlined for precise icons -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    rel="stylesheet" />
+</head>
+
+<body>
+
+  <!-- AUTH VIEW (Full Screen Takeover) -->
+  <div id="view-auth" class="view-section hidden">
+    <div class="auth-layout">
+      <div class="auth-left">
+        <div class="auth-brand">
+          <div class="brand-logo">
+            <span class="material-symbols-outlined logo-icon">translate</span>
+            <div class="brand-text">
+              <span class="brand-name">LinguistPro</span>
+            </div>
+          </div>
+        </div>
+        <div class="auth-marketing">
+          <div class="tag-pill">
+            <span class="material-symbols-outlined">language</span>
+            TRANSFORMING GLOBAL COMMUNICATION
+          </div>
+          <h1>Master every nuance of the world's languages.</h1>
+          <p>Join over 2 million linguists and professionals using AI-powered precision to bridge cultural gaps.</p>
+
+          <div class="auth-stats">
+            <div class="stat">
+              <div class="stat-num">120+</div>
+              <div class="stat-label">Supported Languages</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">99.9%</div>
+              <div class="stat-label">Contextual Accuracy</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="auth-footer-links">
+          <span>© 2024 LinguistPro. Precision in every pixel.</span>
+          <div class="links">
+            <a href="#">Terms of Service</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Help Center</a>
+            <a href="#">Global Connectivity</a>
+          </div>
+        </div>
+      </div>
+      <div class="auth-right">
+        <div class="auth-card">
+          <h2>Create your account</h2>
+          <p class="subtitle">Start your 14-day premium trial today. No credit card required.</p>
+
+          <button id="btn-google-login" class="btn btn-outline w-100 mb-3 btn-social">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google">
+            Continue with Google
+          </button>
+          <button id="btn-apple-login" class="btn btn-outline w-100 mb-4 btn-social">
+            <span class="material-symbols-outlined">apple</span> Continue with Apple
+          </button>
+
+          <div class="divider">
+            <span>OR REGISTER WITH EMAIL</span>
+          </div>
+
+          <form id="auth-form">
+            <div class="form-group" id="name-group">
+              <label>Full Name</label>
+              <input type="text" id="auth-name" placeholder="John Doe">
+            </div>
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="email" id="auth-email" placeholder="name@company.com" required>
+            </div>
+            <div class="form-group">
+              <label>Password</label>
+              <input type="password" id="auth-password" placeholder="••••••••" required>
+            </div>
+
+            <div class="checkbox-group">
+              <input type="checkbox" id="terms" required>
+              <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy
+                  Policy</a>.</label>
+            </div>
+
+            <div id="auth-error" class="error-text hidden"></div>
+
+            <button type="submit" id="auth-submit-btn" class="btn btn-primary w-100">Create Account</button>
+          </form>
+
+          <!-- Custom Google Complete Form (Hidden by default) -->
+          <form id="google-complete-form" class="hidden">
+            <p style="font-size: 0.95rem; margin-bottom: 1.5rem; color: var(--text-light); text-align: center;" id="google-complete-msg">We found your Google Account. Please create a local password to complete registration.</p>
+            <div class="form-group">
+              <label>Set your Password</label>
+              <input type="password" id="google-password" placeholder="••••••••" required>
+            </div>
+            <button type="submit" id="google-submit-btn" class="btn btn-primary w-100">Complete Registration</button>
+            <div class="auth-switch mt-3">
+               <a href="#" id="cancel-google-btn">Cancel</a>
+            </div>
+          </form>
+
+          <p class="auth-switch">Already have an account? <a href="#" id="toggle-auth-mode">Login here</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- APP LAYOUT (Sidebar + Header + Content) -->
+  <div id="app-layout" class="app-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-logo">
+          <span class="material-symbols-outlined logo-icon">translate</span>
+          <div class="brand-text">
+            <span class="brand-name">LinguistPro</span>
+            <span class="brand-tag">GLOBAL CONNECTIVITY</span>
+          </div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#translation-hub" class="nav-item active" data-view="view-translation-hub">
+          <span class="material-symbols-outlined">translate</span>
+          <span>Translation Hub</span>
+        </a>
+        <a href="#phrasebook" class="nav-item" data-view="view-phrasebook">
+          <span class="material-symbols-outlined">menu_book</span>
+          <span>Phrasebook</span>
+        </a>
+        <a href="#history" class="nav-item" data-view="view-history">
+          <span class="material-symbols-outlined">history</span>
+          <span>History</span>
+        </a>
+        <a href="#community" class="nav-item" data-view="view-community">
+          <span class="material-symbols-outlined">group</span>
+          <span>Community</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="pro-card">
+          <h4>LinguistPro Cloud</h4>
+          <p>Your linguistic data is synced across all your devices.</p>
+          <div class="flex-center mt-3" style="gap: 5px; color: var(--success); font-weight: 600; font-size: 0.8rem;">
+            <span class="material-symbols-outlined" style="font-size: 16px;">cloud_done</span>
+            Connected & Synced
+          </div>
+        </div>
+        <div class="footer-links">
+          <a href="#"><span class="material-symbols-outlined">help</span> Help</a>
+          <a href="#"><span class="material-symbols-outlined">shield</span> Privacy</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN AREA -->
+    <div class="main-wrapper">
+
+      <!-- HEADER -->
+      <header class="top-header">
+        <div class="header-left">
+          <div class="search-bar">
+            <span class="material-symbols-outlined">search</span>
+            <input type="text" id="global-search" placeholder="Search translations...">
+          </div>
+        </div>
+        <div class="header-right">
+          <button class="icon-btn"><span class="material-symbols-outlined">notifications</span></button>
+          <button class="icon-btn"><span class="material-symbols-outlined">settings</span></button>
+          <div id="header-auth-section">
+            <button class="btn btn-outline" id="header-login-btn">Login</button>
+            <button class="btn btn-primary">Translate</button>
+          </div>
+          <div id="header-user-section" class="hidden">
+            <button class="btn btn-primary">Translate</button>
+            <div class="profile-container">
+              <div class="user-avatar" id="user-avatar">
+                <span class="material-symbols-outlined">person</span>
+              </div>
+              <div class="profile-dropdown" id="profile-dropdown">
+                <div class="dropdown-header" id="dropdown-user-name">User Name</div>
+                <div class="dropdown-divider"></div>
+                <button class="dropdown-item" id="btn-upload-avatar">
+                  <span class="material-symbols-outlined">account_circle</span>
+                  Change Profile Picture
+                </button>
+                <button class="dropdown-item" id="btn-toggle-dark-mode">
+                  <span class="material-symbols-outlined">dark_mode</span>
+                  Toggle Dark Mode
+                </button>
+                <div class="dropdown-divider"></div>
+                <button class="dropdown-item" id="btn-logout" style="color: #ef4444;">
+                  <span class="material-symbols-outlined" style="color: #ef4444;">logout</span>
+                  Logout
+                </button>
+              </div>
+              <input type="file" id="avatar-upload-input" accept="image/*" class="hidden">
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- CONTENT AREA -->
+      <main class="content-area">
+
+        <!-- VIEW: TRANSLATION HUB -->
+        <section id="view-translation-hub" class="view-section">
+          <div class="view-header">
+            <h2>Translation Hub</h2>
+            <p>Real-time, context-aware linguistic intelligence.</p>
+          </div>
+
+          <div class="translation-grid">
+            <!-- Source Card -->
+            <div class="trans-card source-card">
+              <div class="card-header">
+                <select id="source-lang" class="trans-select">
+                  <option value="auto">Auto-Detect</option>
+                  <option value="en">English</option>
+                  <option value="en">English (Indian)</option>
+                  <option value="hi">Hindi</option>
+                  <option value="bn">Bengali</option>
+                  <option value="ta">Tamil</option>
+                  <option value="te">Telugu</option>
+                  <option value="mr">Marathi</option>
+                  <option value="gu">Gujarati</option>
+                  <option value="kn">Kannada</option>
+                  <option value="ml">Malayalam</option>
+                  <option value="pa">Punjabi</option>
+                  <option value="ur">Urdu</option>
+                  <option value="or">Odia</option>
+                  <option value="as">Assamese</option>
+                  <option value="sa">Sanskrit</option>
+                  <option value="gom">Konkani</option>
+                  <option value="mai">Maithili</option>
+                  <option value="doi">Dogri</option>
+                  <option value="brx">Bodo</option>
+                  <option value="sat">Santali</option>
+                  <option value="sd">Sindhi</option>
+                  <option value="ks">Kashmiri</option>
+                  <option value="mni-Mtei">Manipuri</option>
+                  <option value="ne">Nepali</option>
+                  <option value="bho">Bhojpuri</option>
+                  <option value="raj">Rajasthani</option>
+                  <option value="hne">Chhattisgarhi</option>
+                  <option value="gbm">Garhwali</option>
+                  <option value="kfy">Kumaoni</option>
+                  <option value="tcy">Tulu</option>
+                  <option value="mag">Magahi</option>
+                  <option value="anp">Angika</option>
+                  <option value="lus">Mizo</option>
+                  <option value="kha">Khasi</option>
+                  <option value="grt">Garo</option>
+                  <option value="nag">Nagamese</option>
+                  <option value="es">Spanish</option>
+                  <option value="fr">French</option>
+                  <option value="de">German</option>
+                  <option value="it">Italian</option>
+                  <option value="pt">Portuguese</option>
+                  <option value="ru">Russian</option>
+                  <option value="zh-CN">Chinese (Simplified)</option>
+                  <option value="zh-TW">Chinese (Traditional)</option>
+                  <option value="ja">Japanese</option>
+                  <option value="ko">Korean</option>
+                  <option value="ar">Arabic</option>
+                  <option value="tr">Turkish</option>
+                  <option value="fa">Persian (Farsi)</option>
+                  <option value="id">Indonesian</option>
+                  <option value="ms">Malay</option>
+                  <option value="th">Thai</option>
+                  <option value="vi">Vietnamese</option>
+                  <option value="nl">Dutch</option>
+                  <option value="el">Greek</option>
+                  <option value="pl">Polish</option>
+                  <option value="cs">Czech</option>
+                  <option value="sv">Swedish</option>
+                  <option value="da">Danish</option>
+                  <option value="fi">Finnish</option>
+                  <option value="no">Norwegian</option>
+                  <option value="he">Hebrew</option>
+                  <option value="sw">Swahili</option>
+                  <option value="uk">Ukrainian</option>
+                  <option value="ro">Romanian</option>
+                  <option value="hu">Hungarian</option>
+                  <option value="bg">Bulgarian</option>
+                  <option value="tl">Filipino (Tagalog)</option>
+                </select>
+                <button class="icon-btn swap-btn" id="swap-lang-btn"><span
+                    class="material-symbols-outlined">swap_horiz</span></button>
+              </div>
+              <textarea id="source-text" placeholder="Type or paste text to translate..."></textarea>
+              <div class="card-footer">
+                <span id="char-count" class="char-count">0 / 5000 CHARACTERS</span>
+                <div class="card-actions">
+                  <button class="icon-btn" id="mic-btn"><span class="material-symbols-outlined">mic</span></button>
+                  <button class="icon-btn" id="upload-btn"><span class="material-symbols-outlined">upload_file</span></button>
+                  <input type="file" id="file-upload-input" accept=".txt" class="hidden">
+                  <button class="icon-btn" id="keyboard-btn"><span class="material-symbols-outlined">keyboard</span></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Target Card -->
+            <div class="trans-card target-card">
+              <div class="card-header">
+                <select id="target-lang" class="trans-select">
+                  <option value="hi">Hindi</option>
+                  <option value="en">English</option>
+                  <option value="en">English (Indian)</option>
+                  <option value="bn">Bengali</option>
+                  <option value="ta">Tamil</option>
+                  <option value="te">Telugu</option>
+                  <option value="mr">Marathi</option>
+                  <option value="gu">Gujarati</option>
+                  <option value="kn">Kannada</option>
+                  <option value="ml">Malayalam</option>
+                  <option value="pa">Punjabi</option>
+                  <option value="ur">Urdu</option>
+                  <option value="or">Odia</option>
+                  <option value="as">Assamese</option>
+                  <option value="sa">Sanskrit</option>
+                  <option value="gom">Konkani</option>
+                  <option value="mai">Maithili</option>
+                  <option value="doi">Dogri</option>
+                  <option value="brx">Bodo</option>
+                  <option value="sat">Santali</option>
+                  <option value="sd">Sindhi</option>
+                  <option value="ks">Kashmiri</option>
+                  <option value="mni-Mtei">Manipuri</option>
+                  <option value="ne">Nepali</option>
+                  <option value="bho">Bhojpuri</option>
+                  <option value="raj">Rajasthani</option>
+                  <option value="hne">Chhattisgarhi</option>
+                  <option value="gbm">Garhwali</option>
+                  <option value="kfy">Kumaoni</option>
+                  <option value="tcy">Tulu</option>
+                  <option value="mag">Magahi</option>
+                  <option value="anp">Angika</option>
+                  <option value="lus">Mizo</option>
+                  <option value="kha">Khasi</option>
+                  <option value="grt">Garo</option>
+                  <option value="nag">Nagamese</option>
+                  <option value="es">Spanish</option>
+                  <option value="fr">French</option>
+                  <option value="de">German</option>
+                  <option value="it">Italian</option>
+                  <option value="pt">Portuguese</option>
+                  <option value="ru">Russian</option>
+                  <option value="zh-CN">Chinese (Simplified)</option>
+                  <option value="zh-TW">Chinese (Traditional)</option>
+                  <option value="ja">Japanese</option>
+                  <option value="ko">Korean</option>
+                  <option value="ar">Arabic</option>
+                  <option value="tr">Turkish</option>
+                  <option value="fa">Persian (Farsi)</option>
+                  <option value="id">Indonesian</option>
+                  <option value="ms">Malay</option>
+                  <option value="th">Thai</option>
+                  <option value="vi">Vietnamese</option>
+                  <option value="nl">Dutch</option>
+                  <option value="el">Greek</option>
+                  <option value="pl">Polish</option>
+                  <option value="cs">Czech</option>
+                  <option value="sv">Swedish</option>
+                  <option value="da">Danish</option>
+                  <option value="fi">Finnish</option>
+                  <option value="no">Norwegian</option>
+                  <option value="he">Hebrew</option>
+                  <option value="sw">Swahili</option>
+                  <option value="uk">Ukrainian</option>
+                  <option value="ro">Romanian</option>
+                  <option value="hu">Hungarian</option>
+                  <option value="bg">Bulgarian</option>
+                  <option value="tl">Filipino (Tagalog)</option>
+                </select>
+                <div class="card-actions">
+                  <button class="icon-btn" id="copy-btn"><span
+                      class="material-symbols-outlined">content_copy</span></button>
+                  <button class="icon-btn"><span class="material-symbols-outlined">volume_up</span></button>
+                </div>
+              </div>
+
+              <div class="target-content">
+                <div id="target-text" class="target-text-display"></div>
+                <div id="loading-indicator" class="loading-state hidden">
+                  <div class="spinner"></div> Translating...
+                </div>
+              </div>
+
+              <!-- Contextual Alternatives -->
+              <div id="contextual-block" class="contextual-block hidden">
+                <div class="context-label">CONTEXTUAL ALTERNATIVES</div>
+                <div id="context-list">
+                  <!-- Injected via JS -->
+                </div>
+              </div>
+
+              <div class="card-footer right-align">
+                <button class="btn btn-primary" id="save-phrase-btn"><span
+                    class="material-symbols-outlined">bookmark</span> Save to Phrasebook</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Grid Promos -->
+          <div class="promo-grid">
+            <div class="promo-card dark">
+              <h3>Neural Engine v4.2</h3>
+              <p>Experience 40% faster translation with our latest language model.</p>
+            </div>
+            <div class="promo-card">
+              <div class="promo-icon"><span class="material-symbols-outlined">analytics</span></div>
+              <div class="promo-info">
+                <div class="promo-title">Contextual Depth <span class="badge active">ACTIVE</span> <span
+                    class="badge premium">PREMIUM</span></div>
+                <p>AI is analyzing the regional nuances of your text...</p>
+              </div>
+            </div>
+            <div class="promo-card list-card">
+              <div class="list-header"><span class="material-symbols-outlined">history</span> Recent History</div>
+              <ul class="recent-list" id="recent-history-list">
+                <li>Meeting at 3 PM tomorrow...</li>
+                <li>Please find the attached invoice...</li>
+              </ul>
+            </div>
+            <div class="promo-card">
+              <h3>Collaborative Editing</h3>
+              <p>Invite your team to review and refine translations in real-time.</p>
+              <a href="#" class="link-action">Invite Team Member &rarr;</a>
+              <div class="team-avatars">
+                <img src="https://i.pravatar.cc/100?img=1" alt="Team">
+                <img src="https://i.pravatar.cc/100?img=2" alt="Team">
+                <img src="https://i.pravatar.cc/100?img=3" alt="Team">
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- VIEW: PHRASEBOOK -->
+        <section id="view-phrasebook" class="view-section hidden">
+
+          <div class="cultural-context-tag">
+            <span class="material-symbols-outlined">public</span> CULTURAL CONTEXT
+          </div>
+          <h2 class="view-title">Regional Phrasebook</h2>
+          <p class="view-subtitle">Unlock the soul of language. Explore idioms and colloquialisms that bridge the gap
+            between literal words and cultural nuance.</p>
+
+          <div class="filter-bar">
+            <div class="filter-pills">
+              <button class="pill active">All Phrases</button>
+              <button class="pill">Business</button>
+              <button class="pill">Social</button>
+              <button class="pill">Travel</button>
+              <button class="pill">Dining</button>
+              <button class="pill">Technology</button>
+              <button class="pill">Colloquial</button>
+            </div>
+            <div class="filter-actions">
+              <button class="btn btn-outline"><span class="material-symbols-outlined">filter_list</span> Sort:
+                Popular</button>
+              <button class="btn btn-dark"><span class="material-symbols-outlined">add</span> Contribute</button>
+            </div>
+          </div>
+
+          <div class="phrase-grid" id="phrase-grid">
+            <!-- Populated via JS -->
+          </div>
+
+          <div class="pagination">
+            Showing 6 of 1,248 regional phrases
+            <div class="page-controls">
+              <button class="page-btn"><span class="material-symbols-outlined">chevron_left</span></button>
+              <button class="page-btn active">1</button>
+              <button class="page-btn">2</button>
+              <button class="page-btn">3</button>
+              <button class="page-btn"><span class="material-symbols-outlined">chevron_right</span></button>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- VIEW: HISTORY -->
+        <section id="view-history" class="view-section hidden">
+          <div class="view-header flex-between">
+            <div>
+              <h2>Translation History</h2>
+              <p>Keep track of your linguistic journey and access saved translations.</p>
+            </div>
+            <div class="history-tabs">
+              <button class="tab active">All Activity</button>
+              <button class="tab">Favorites</button>
+            </div>
+          </div>
+
+          <div class="history-filters">
+            <div class="filter-group">
+              <label>Language:</label>
+              <select>
+                <option>All Pairs</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label>Date:</label>
+              <select>
+                <option>Last 30 Days</option>
+              </select>
+            </div>
+            <button class="btn btn-text">Clear all filters</button>
+            <div class="spacer"></div>
+            <div class="filter-group sort-group">
+              <label>Sort by:</label>
+              <select>
+                <option>Newest First</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="history-list" id="history-list">
+            <!-- Populated via JS -->
+          </div>
+
+        </section>
+
+        <!-- VIEW: COMMUNITY -->
+        <section id="view-community" class="view-section hidden">
+          <div class="community-layout">
+            <div class="community-feed">
+              <div class="post-box">
+                <div class="user-avatar" id="community-user-avatar">
+                  <span class="material-symbols-outlined">person</span>
+                </div>
+                <div class="post-input-area">
+                  <input type="text" id="community-post-input" placeholder="Ask a cultural question or request a translation...">
+                  <div class="post-actions">
+                    <button class="btn btn-light-sm" id="btn-community-lang"><span class="material-symbols-outlined">language</span> English → Japanese</button>
+                    <button class="btn btn-light-sm" id="btn-community-tags"><span class="material-symbols-outlined">tag</span> Add Tags</button>
+                    <div class="spacer"></div>
+                    <button class="btn btn-primary btn-sm" id="community-post-btn">Post</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="feed-tabs">
+                <button class="tab active">All Posts</button>
+                <button class="tab">Questions</button>
+                <button class="tab">Requests</button>
+                <button class="tab">Unanswered</button>
+              </div>
+
+              <div id="community-feed-items">
+                <!-- Posts will be injected here -->
+              </div>
+
+
+
+            </div>
+
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
