@@ -25,7 +25,10 @@ if (process.env.NODE_ENV === 'development') {
 app.use(helmet());
 
 // Enable CORS
-app.use(cors());
+app.use(cors({
+  origin: 'https://project-frontend-w7na.onrender.com',
+  credentials: true
+}));
 
 // Rate limiting
 const limiter = rateLimit({
