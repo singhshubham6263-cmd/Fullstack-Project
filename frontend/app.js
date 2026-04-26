@@ -251,8 +251,11 @@ toggleAuthModeBtn.addEventListener('click', (e) => {
 });
 
 authForm.addEventListener('submit', async (e) => {
+  console.log('Auth form submit triggered');
   e.preventDefault();
   authError.classList.add('hidden');
+  authSubmitBtn.disabled = true;
+  authSubmitBtn.textContent = 'Processing...';
 
   const email = authEmail.value;
   const password = authPassword.value;
@@ -280,8 +283,12 @@ authForm.addEventListener('submit', async (e) => {
     checkAuth();
     navigateTo('view-translation-hub');
   } catch (err) {
+    console.error('Auth error:', err);
     authError.textContent = err.message;
     authError.classList.remove('hidden');
+  } finally {
+    authSubmitBtn.disabled = false;
+    authSubmitBtn.textContent = isLoginMode ? 'Login' : 'Create Account';
   }
 });
 
