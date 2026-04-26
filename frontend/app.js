@@ -1,6 +1,6 @@
 const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
   ? 'http://localhost:5000/api' 
-  : 'https://fullstack-project-backend-singh.onrender.com/api'; // We will use this name for backend
+  : 'https://fullstack-project-back.onrender.com/api'; 
 
 // DOM Elements
 const appLayout = document.getElementById('app-layout');
