@@ -182,8 +182,19 @@
           </div>
         </div>
         <div class="header-right">
-          <button class="icon-btn"><span class="material-symbols-outlined">notifications</span></button>
-          <button class="icon-btn"><span class="material-symbols-outlined">settings</span></button>
+          <div class="notification-container">
+            <button class="icon-btn" id="btn-notifications">
+              <span class="material-symbols-outlined">notifications</span>
+              <span id="notif-badge" class="notif-badge hidden"></span>
+            </button>
+            <div class="notif-dropdown" id="notif-dropdown">
+              <div class="dropdown-header">Notifications</div>
+              <div class="notif-list" id="notif-list">
+                <div class="notif-empty">No new notifications</div>
+              </div>
+            </div>
+          </div>
+          <button class="icon-btn" id="btn-settings-header"><span class="material-symbols-outlined">settings</span></button>
           <div id="header-auth-section">
             <button class="btn btn-outline" id="header-login-btn">Login</button>
             <button class="btn btn-primary">Translate</button>
@@ -600,6 +611,43 @@
       <span>Community</span>
     </a>
   </nav>
+
+  <!-- SETTINGS MODAL -->
+  <div id="settings-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>System Settings</h3>
+        <button class="icon-btn" id="close-settings"><span class="material-symbols-outlined">close</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="settings-group">
+          <label>Appearance</label>
+          <div class="settings-row">
+            <span>Dark Mode</span>
+            <button class="btn btn-outline btn-sm" id="btn-settings-dark-mode">Toggle</button>
+          </div>
+        </div>
+        <div class="settings-group">
+          <label>Translation Preferences</label>
+          <div class="settings-row">
+            <span>Auto-detect source language</span>
+            <input type="checkbox" checked>
+          </div>
+          <div class="settings-row">
+            <span>Show literal translations</span>
+            <input type="checkbox" checked>
+          </div>
+        </div>
+        <div class="settings-group">
+          <label>Account</label>
+          <button class="btn btn-outline btn-sm w-100" style="justify-content: flex-start; color: var(--danger);">Delete All History</button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary w-100" id="save-settings">Save Changes</button>
+      </div>
+    </div>
+  </div>
 
   <script src="app.js"></script>
 </body>

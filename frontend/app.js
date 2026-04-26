@@ -808,9 +808,97 @@ globalSearch.addEventListener('input', (e) => {
   });
 });
 
+// ==========================================
+// SETTINGS & NOTIFICATIONS
+// ==========================================
+
+const btnNotifications = document.getElementById('btn-notifications');
+const notifDropdown = document.getElementById('notif-dropdown');
+const notifBadge = document.getElementById('notif-badge');
+const notifList = document.getElementById('notif-list');
+
+const btnSettingsHeader = document.getElementById('btn-settings-header');
+const settingsModal = document.getElementById('settings-modal');
+const closeSettings = document.getElementById('close-settings');
+const saveSettings = document.getElementById('save-settings');
+const btnSettingsDarkMode = document.getElementById('btn-settings-dark-mode');
+
+// Notifications Toggle
+if (btnNotifications) {
+  btnNotifications.addEventListener('click', (e) => {
+    e.stopPropagation();
+    notifDropdown.classList.toggle('show');
+    notifBadge.classList.add('hidden'); // Clear badge when opened
+  });
+}
+
+document.addEventListener('click', () => {
+  if (notifDropdown) notifDropdown.classList.remove('show');
+});
+
+// Settings Modal
+if (btnSettingsHeader) {
+  btnSettingsHeader.addEventListener('click', () => {
+    settingsModal.classList.remove('hidden');
+  });
+}
+
+if (closeSettings) {
+  closeSettings.addEventListener('click', () => {
+    settingsModal.classList.add('hidden');
+  });
+}
+
+if (saveSettings) {
+  saveSettings.addEventListener('click', () => {
+    alert("Settings saved successfully!");
+    settingsModal.classList.add('hidden');
+  });
+}
+
+if (btnSettingsDarkMode) {
+  btnSettingsDarkMode.addEventListener('click', () => {
+    btnToggleDarkMode.click(); // Reuse existing dark mode logic
+  });
+}
+
+// SIMULATE REAL-TIME NOTIFICATIONS
+async function checkNewActivity() {
+  try {
+    const res = await fetch(`${API_URL}/posts`);
+    const data = await res.json();
+    
+    if (res.ok && data.data.length > 0) {
+      const latestPost = data.data[0];
+      
+      // Update Notif List
+      notifList.innerHTML = `
+        <div class="notif-item">
+          <strong>${latestPost.userName}</strong> shared a new post in Community.
+          <div class="time">Just now</div>
+        </div>
+        <div class="notif-item">
+          <strong>System</strong>: Your cloud sync is active.
+          <div class="time">5 mins ago</div>
+        </div>
+      `;
+      
+      // Show Badge
+      notifBadge.classList.remove('hidden');
+    }
+  } catch (e) {
+    console.error("Notif check failed", e);
+  }
+}
+
+// Initial check and then every 60s
+checkNewActivity();
+setInterval(checkNewActivity, 60000);
+
 // Auto-refresh community feed every 30s
 setInterval(() => {
-  if (document.getElementById('view-community').classList.contains('hidden') === false) {
+  const commView = document.getElementById('view-community');
+  if (commView && !commView.classList.contains('hidden')) {
     loadCommunityPosts();
   }
 }, 30000);
